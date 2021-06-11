@@ -1,13 +1,34 @@
-import Head from "next/head";
-import Image from "next/image";
 import styles from "../styles/Home.module.css";
 import Tangram from "./tangram";
-import { tangramList } from "./tangramList";
+import points from "../assets/points.json";
 
 export default function Home() {
+  // var points = JSON.parse(pointsJson);
   return (
     <div className={styles.container}>
-      <Tangram svg={tangramList["page1-13.svg"]}></Tangram>
+      {Object.entries(points).map(([key, value]) => {
+        // Pretty straightforward - use key for the key and value for the value.
+        // Just to clarify: unlike object destructuring, the parameter names don't matter here.
+        return (
+          <Tangram
+            points={value}
+            colors={[
+              "lightgray",
+              "lightgray",
+              "lightgray",
+              "lightgray",
+              "lightgray",
+              "lightgray",
+              "lightgray",
+            ]}
+          ></Tangram>
+        );
+      })}
+
+      {/* {points.forEach((e) => {
+      //   console.log(e.key);
+        
+      // })} */}
     </div>
   );
 }
