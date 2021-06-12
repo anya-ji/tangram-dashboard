@@ -5,7 +5,7 @@ function SvgComponent(props) {
     <svg
       baseProfile="full"
       height="100%"
-      viewBox="0 0 144.0 144.0"
+      viewBox={props.viewBox}
       width="100%"
       xmlns="http://www.w3.org/2000/svg"
       xmlnsXlink="http://www.w3.org/1999/xlink"
