@@ -10,15 +10,11 @@ import GridListTile from "@material-ui/core/GridListTile";
 import GridListTileBar from "@material-ui/core/GridListTileBar";
 import ListSubheader from "@material-ui/core/ListSubheader";
 import IconButton from "@material-ui/core/IconButton";
-// import InfoIcon from "@material-ui/icons/Info";
+import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import { useRouter } from "next/router";
 import * as FB from "../api/firebase";
 import { useState, useEffect } from "react";
-import Card from "@material-ui/core/Card";
-import CardActionArea from "@material-ui/core/CardActionArea";
-import CardActions from "@material-ui/core/CardActions";
-import CardContent from "@material-ui/core/CardContent";
-import CardMedia from "@material-ui/core/CardMedia";
+import { makeColor } from "../util";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -50,15 +46,7 @@ export default function Annotations(props) {
   const router = useRouter();
   const { tangramId } = router.query;
   const [annotations, setAnnotations] = useState();
-  const colorOptions = {
-    1: "red",
-    2: "green",
-    3: "blue",
-    4: "gold",
-    5: "purple",
-    6: "deeppink",
-    7: "orange",
-  };
+
 
   useEffect(() => {
     if (tangramId) {
@@ -73,28 +61,17 @@ export default function Annotations(props) {
     }
   }, [tangramId]);
 
-  function makeColor(ann) {
-    var annToColor = {};
-    var pieceToColor = [];
-    for (var i = 1; i < 8; i++) {
-      const color = annToColor[ann[i]];
-      if (color) {
-        // annotation exists
-        pieceToColor[i - 1] = color;
-      } else {
-        // unique annotation
-        const newColor = colorOptions[i];
-        annToColor[ann[i]] = newColor;
-        pieceToColor[i - 1] = newColor;
-      }
-    }
-    return { colors: pieceToColor, annToColor: annToColor };
-  }
-
-  function makeAnnotation(annToColor) {
-    return Object.entries(annToColor).map(([ann, color]) => {
-      return <p style={{ color: color }}>{ann}</p>;
-    });
+  function makeAnnotation(annToColor, workerId) {
+    return (
+      <>
+        {Object.entries(annToColor).map(([ann, color]) => {
+          return (
+            <span style={{ color: color, marginRight: "18px" }}>{ann}</span>
+          );
+        })}
+        <p>{"Worker: " + workerId}</p>
+      </>
+    );
   }
 
   if (!tangramId) {
@@ -109,7 +86,7 @@ export default function Annotations(props) {
             <Button
               color="inherit"
               onClick={() => {
-                router.push("/");
+                router.back();
               }}
             >
               Back
@@ -136,7 +113,7 @@ export default function Annotations(props) {
         </div>
 
         <GridList
-          cols={4}
+          cols={2}
           className={classes.gridList}
           style={{ padding: "1vh" }}
         >
@@ -144,7 +121,7 @@ export default function Annotations(props) {
             Object.entries(annotations).map(([workerId, value]) => {
               const colorInfo = makeColor(value["piece-annotation"]);
               const colors = colorInfo["colors"];
-              const annList = makeAnnotation(colorInfo["annToColor"]);
+              const annList = makeAnnotation(colorInfo["annToColor"], workerId);
               return (
                 <GridListTile key={workerId} rows={2}>
                   <Tangram
@@ -156,16 +133,21 @@ export default function Annotations(props) {
                   <GridListTileBar
                     title={value["whole-annotation"].wholeAnnotation}
                     subtitle={annList}
-                    style={{ height: "30vh" }}
-                    // actionIcon={
-                    //   <IconButton
-                    //     aria-label={`info about `}
-                    //     className={classes.icon}
-                    //   >
-                    //     <InfoIcon />
-                    //   </IconButton>
-                    // }
-                  />
+                    style={{ height: "15vh" }}
+                    actionIcon={
+                      <IconButton
+                        // aria-label={`info about `}
+                        className={classes.icon}
+                        onClick={() => {
+                          router.push(
+                            `/workers/${encodeURIComponent(workerId)}`
+                          );
+                        }}
+                      >
+                        <AccountCircleIcon />
+                      </IconButton>
+                    }
+                  ></GridListTileBar>
                 </GridListTile>
               );
             })

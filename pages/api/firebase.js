@@ -25,6 +25,11 @@ export const getAnnotations = (tangramName) => {
   return db.collection("annotations").doc(tangramName).get();
 };
 
+export const getUser = (workerId) => {
+  console.log("getUser");
+  return db.collection("users").doc(workerId).get();
+};
+
 export const getAllFiles = () => {
   console.log("getAllFiles");
   return db.collection("files").get();
