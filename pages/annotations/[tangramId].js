@@ -14,7 +14,7 @@ import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import { useRouter } from "next/router";
 import * as FB from "../api/firebase";
 import { useState, useEffect } from "react";
-import { makeColor } from "../util";
+import { makeColor } from "../../components/util";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -46,7 +46,6 @@ export default function Annotations(props) {
   const router = useRouter();
   const { tangramId } = router.query;
   const [annotations, setAnnotations] = useState();
-
 
   useEffect(() => {
     if (tangramId) {
