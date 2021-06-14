@@ -57,7 +57,7 @@ export default function Home() {
         setCounts(newObj);
       })
       .catch((e) => console.log(e));
-  }, [fileNameToCounts]);
+  }, []);
 
   if (!fileNameToCounts) {
     return <></>;

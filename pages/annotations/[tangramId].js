@@ -143,6 +143,7 @@ export default function Annotations(props) {
                   ></Tangram>
                   <GridListTileBar
                     title={value["whole-annotation"].wholeAnnotation}
+                    subtitle={<p style={{ color: "blue" }}>{"annotations"}</p>}
                     // actionIcon={
                     //   <IconButton
                     //     aria-label={`info about `}
