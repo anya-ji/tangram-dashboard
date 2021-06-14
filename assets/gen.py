@@ -11,13 +11,12 @@ pattern_viewBox = r'viewBox="(.*?)"'
 
 rs = {}
 for file in onlyfiles:
-  if file!="gen.py" and file!="points.json":
+  if file!="gen.py" and file!="tangrams.json":
     f = open(file,'r').read().replace("\n"," ")
     points = re.findall(pattern, f)
     viewBox = re.findall(pattern_viewBox, f)
-    # rs.append({file: points})
     rs[file] = {'points': points, 'viewBox': viewBox[0]}
-    print(rs)
+# print(rs)
 
-with open('points.json', 'w') as fp:
+with open('tangrams.json', 'w') as fp:
     json.dump(rs, fp)

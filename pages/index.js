@@ -1,4 +1,4 @@
-import Tangram from "./tangram";
+import Tangram from "../components/tangram";
 import tangrams from "../assets/tangrams.json";
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
@@ -11,6 +11,10 @@ import GridListTileBar from "@material-ui/core/GridListTileBar";
 import ListSubheader from "@material-ui/core/ListSubheader";
 import IconButton from "@material-ui/core/IconButton";
 // import InfoIcon from "@material-ui/icons/Info";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import * as FB from "./api/firebase";
+import { useState, useEffect } from "react";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -38,6 +42,26 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Home() {
   const classes = useStyles();
+  const router = useRouter();
+  const [fileNameToCounts, setCounts] = useState({});
+  useEffect(() => {
+    var newObj = {};
+    FB.getAllFiles()
+      .then((snapshot) => {
+        snapshot.forEach((doc) => {
+          const data = doc.data();
+          newObj[data["name"]] = data["count"];
+        });
+      })
+      .then(() => {
+        setCounts(newObj);
+      })
+      .catch((e) => console.log(e));
+  }, [fileNameToCounts]);
+
+  if (!fileNameToCounts) {
+    return <></>;
+  }
   return (
     <div className={classes.root}>
       <AppBar position="static">
@@ -49,37 +73,61 @@ export default function Home() {
         </Toolbar>
       </AppBar>
 
-      <GridList cols={4} className={classes.gridList} style={{ margin: "1vh" }}>
-        {Object.entries(tangrams).map(([key, value]) => {
-          return (
-            <GridListTile key={key} rows={1.5}>
-              <Tangram
-                viewBox={value["viewBox"]}
-                points={value["points"]}
-                colors={[
-                  "lightgray",
-                  "lightgray",
-                  "lightgray",
-                  "lightgray",
-                  "lightgray",
-                  "lightgray",
-                  "lightgray",
-                ]}
-              ></Tangram>
-              <GridListTileBar
-                title={key}
-                // actionIcon={
-                //   <IconButton
-                //     aria-label={`info about `}
-                //     className={classes.icon}
-                //   >
-                //     <InfoIcon />
-                //   </IconButton>
-                // }
-              />
-            </GridListTile>
-          );
-        })}
+      <GridList
+        cols={4}
+        className={classes.gridList}
+        style={{ margin: "1vh", padding: "1vh" }}
+      >
+        {fileNameToCounts ? (
+          Object.entries(tangrams).map(([key, value]) => {
+            const name = key.replace(".svg", "");
+            if (
+              fileNameToCounts[name] != undefined &&
+              fileNameToCounts[name] !== 0
+            ) {
+              // if file exists in database and count is not 0
+              return (
+                <GridListTile
+                  key={name}
+                  rows={1.5}
+                  onClick={() => {
+                    router.push(`/annotations/${encodeURIComponent(key)}`);
+                  }}
+                >
+                  <Tangram
+                    viewBox={value["viewBox"]}
+                    points={value["points"]}
+                    colors={[
+                      "lightgray",
+                      "lightgray",
+                      "lightgray",
+                      "lightgray",
+                      "lightgray",
+                      "lightgray",
+                      "lightgray",
+                    ]}
+                  ></Tangram>
+                  <GridListTileBar
+                    title={name}
+                    subtitle={
+                      <span>{fileNameToCounts[name] + " annotations"}</span>
+                    }
+                    // actionIcon={
+                    //   <IconButton
+                    //     aria-label={`info about `}
+                    //     className={classes.icon}
+                    //   >
+                    //     <InfoIcon />
+                    //   </IconButton>
+                    // }
+                  />
+                </GridListTile>
+              );
+            }
+          })
+        ) : (
+          <></>
+        )}
       </GridList>
     </div>
   );
