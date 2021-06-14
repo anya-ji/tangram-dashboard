@@ -14,6 +14,11 @@ import IconButton from "@material-ui/core/IconButton";
 import { useRouter } from "next/router";
 import * as FB from "../api/firebase";
 import { useState, useEffect } from "react";
+import Card from "@material-ui/core/Card";
+import CardActionArea from "@material-ui/core/CardActionArea";
+import CardActions from "@material-ui/core/CardActions";
+import CardContent from "@material-ui/core/CardContent";
+import CardMedia from "@material-ui/core/CardMedia";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -62,7 +67,6 @@ export default function Annotations(props) {
         .then((doc) => {
           if (doc.exists) {
             setAnnotations(doc.data());
-            console.log(doc.data());
           }
         })
         .catch((e) => console.log(e));
@@ -84,7 +88,13 @@ export default function Annotations(props) {
         pieceToColor[i - 1] = newColor;
       }
     }
-    return pieceToColor;
+    return { colors: pieceToColor, annToColor: annToColor };
+  }
+
+  function makeAnnotation(annToColor) {
+    return Object.entries(annToColor).map(([ann, color]) => {
+      return <p style={{ color: color }}>{ann}</p>;
+    });
   }
 
   if (!tangramId) {
@@ -132,18 +142,21 @@ export default function Annotations(props) {
         >
           {annotations ? (
             Object.entries(annotations).map(([workerId, value]) => {
-              const colors = makeColor(value["piece-annotation"]);
-              console.log(colors);
+              const colorInfo = makeColor(value["piece-annotation"]);
+              const colors = colorInfo["colors"];
+              const annList = makeAnnotation(colorInfo["annToColor"]);
               return (
-                <GridListTile key={workerId} rows={1.5}>
+                <GridListTile key={workerId} rows={2}>
                   <Tangram
                     viewBox={viewBox}
                     points={points}
                     colors={colors}
                   ></Tangram>
+
                   <GridListTileBar
                     title={value["whole-annotation"].wholeAnnotation}
-                    subtitle={<p style={{ color: "blue" }}>{"annotations"}</p>}
+                    subtitle={annList}
+                    style={{ height: "30vh" }}
                     // actionIcon={
                     //   <IconButton
                     //     aria-label={`info about `}

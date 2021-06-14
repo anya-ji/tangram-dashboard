@@ -21,9 +21,11 @@ if (!firebase.apps.length) {
 const db = firebaseApp.firestore();
 
 export const getAnnotations = (tangramName) => {
+  console.log("getAnnotations");
   return db.collection("annotations").doc(tangramName).get();
 };
 
 export const getAllFiles = () => {
+  console.log("getAllFiles");
   return db.collection("files").get();
 };
