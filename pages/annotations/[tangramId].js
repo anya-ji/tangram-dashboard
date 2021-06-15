@@ -14,7 +14,7 @@ import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import { useRouter } from "next/router";
 import * as FB from "../api/firebase";
 import { useState, useEffect } from "react";
-import { makeColor } from "../../components/util";
+import { makeColor, makeAnnotation } from "../../components/util";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -67,19 +67,6 @@ export default function Annotations(props) {
         .catch((e) => console.log(e));
     }
   }, [tangramId]);
-
-  function makeAnnotation(annToColor, workerId) {
-    return (
-      <>
-        {Object.entries(annToColor).map(([ann, color]) => {
-          return (
-            <span style={{ color: color, marginRight: "18px" }}>{ann}</span>
-          );
-        })}
-        <p>{"Worker: " + workerId}</p>
-      </>
-    );
-  }
 
   if (!tangramId) {
     return <></>;
@@ -142,10 +129,7 @@ export default function Annotations(props) {
                 Object.entries(annotations).map(([workerId, value]) => {
                   const colorInfo = makeColor(value["piece-annotation"]);
                   const colors = colorInfo["colors"];
-                  const annList = makeAnnotation(
-                    colorInfo["annToColor"],
-                    workerId
-                  );
+                  const annList = makeAnnotation(colorInfo["annToColor"]);
                   return (
                     <TableRow key={workerId}>
                       <TableCell align="center">

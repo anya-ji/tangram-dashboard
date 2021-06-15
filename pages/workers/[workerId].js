@@ -15,7 +15,7 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
-import { makeColor } from "../../components/util";
+import { makeColor, makeAnnotation } from "../../components/util";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -53,18 +53,6 @@ export default function Worker(props) {
         .catch((e) => console.log(e));
     }
   }, [workerId]);
-
-  function makeAnnotation(annToColor, workerId) {
-    return (
-      <>
-        {Object.entries(annToColor).map(([ann, color]) => {
-          return (
-            <span style={{ color: color, marginRight: "18px" }}>{ann}</span>
-          );
-        })}
-      </>
-    );
-  }
 
   if (!workerId) {
     return <></>;
@@ -115,10 +103,7 @@ export default function Worker(props) {
                   ) {
                     const colorInfo = makeColor(value["piece-annotation"]);
                     const colors = colorInfo["colors"];
-                    const annList = makeAnnotation(
-                      colorInfo["annToColor"],
-                      workerId
-                    );
+                    const annList = makeAnnotation(colorInfo["annToColor"]);
                     return (
                       <TableRow key={key}>
                         <TableCell align="center">

@@ -25,3 +25,13 @@ export function makeColor(ann) {
   }
   return { colors: pieceToColor, annToColor: annToColor };
 }
+
+export function makeAnnotation(annToColor) {
+  return (
+    <>
+      {Object.entries(annToColor).map(([ann, color]) => {
+        return <span style={{ color: color, marginRight: "18px" }}>{ann}</span>;
+      })}
+    </>
+  );
+}
