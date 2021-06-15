@@ -26,19 +26,9 @@ const useStyles = makeStyles((theme) => ({
     overflow: "hidden",
     backgroundColor: theme.palette.background.paper,
   },
-  menuButton: {
-    marginRight: theme.spacing(2),
-  },
   title: {
     flexGrow: 1,
     alignItems: "center",
-  },
-  gridList: {
-    width: "100%",
-    height: "100%",
-  },
-  icon: {
-    color: "rgba(255, 255, 255, 0.54)",
   },
   table: {
     minWidth: 650,
@@ -90,6 +80,14 @@ export default function Worker(props) {
               }}
             >
               Back
+            </Button>
+            <Button
+              color="inherit"
+              onClick={() => {
+                router.push("/");
+              }}
+            >
+              Home
             </Button>
             <Typography variant="h6" align="center" className={classes.title}>
               {"Worker: " + workerId}
@@ -158,15 +156,6 @@ export default function Worker(props) {
               ) : (
                 <></>
               )}
-              {/* {annotations.map((row) => (
-                <TableRow key={row.name}>
-                  <TableCell component="th" scope="row">
-                    {row.name}
-                  </TableCell>
-                  <TableCell align="right">{row.calories}</TableCell>
-                  <TableCell align="right">{row.fat}</TableCell>
-                </TableRow>
-              ))} */}
             </TableBody>
           </Table>
         </TableContainer>

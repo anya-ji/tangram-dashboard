@@ -15,6 +15,13 @@ import { useRouter } from "next/router";
 import * as FB from "../api/firebase";
 import { useState, useEffect } from "react";
 import { makeColor } from "../../components/util";
+import Table from "@material-ui/core/Table";
+import TableBody from "@material-ui/core/TableBody";
+import TableCell from "@material-ui/core/TableCell";
+import TableContainer from "@material-ui/core/TableContainer";
+import TableHead from "@material-ui/core/TableHead";
+import TableRow from "@material-ui/core/TableRow";
+import Paper from "@material-ui/core/Paper";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -24,9 +31,6 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "space-around",
     overflow: "hidden",
     backgroundColor: theme.palette.background.paper,
-  },
-  menuButton: {
-    marginRight: theme.spacing(2),
   },
   title: {
     flexGrow: 1,
@@ -38,6 +42,10 @@ const useStyles = makeStyles((theme) => ({
   },
   icon: {
     color: "rgba(255, 255, 255, 0.54)",
+  },
+  table: {
+    minWidth: 650,
+    margin: "1vh",
   },
 }));
 
@@ -90,6 +98,14 @@ export default function Annotations(props) {
             >
               Back
             </Button>
+            <Button
+              color="inherit"
+              onClick={() => {
+                router.push("/");
+              }}
+            >
+              Home
+            </Button>
             <Typography variant="h6" align="center" className={classes.title}>
               {"Annotations: " + tangramId.replace(".svg", "")}
             </Typography>
@@ -111,7 +127,64 @@ export default function Annotations(props) {
           ></Tangram>
         </div>
 
-        <GridList
+        <TableContainer component={Paper}>
+          <Table className={classes.table} aria-label="simple table">
+            <TableHead>
+              <TableRow>
+                <TableCell align="center">Tangram</TableCell>
+                <TableCell align="center">Worker</TableCell>
+                <TableCell align="center">Whole</TableCell>
+                <TableCell align="center">Piece</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {annotations ? (
+                Object.entries(annotations).map(([workerId, value]) => {
+                  const colorInfo = makeColor(value["piece-annotation"]);
+                  const colors = colorInfo["colors"];
+                  const annList = makeAnnotation(
+                    colorInfo["annToColor"],
+                    workerId
+                  );
+                  return (
+                    <TableRow key={workerId}>
+                      <TableCell align="center">
+                        {
+                          <Tangram
+                            viewBox={viewBox}
+                            points={points}
+                            colors={colors}
+                          ></Tangram>
+                        }
+                      </TableCell>
+                      <TableCell align="center">
+                        <Button
+                          variant="contained"
+                          color="primary"
+                          onClick={() => {
+                            router.push(
+                              `/workers/${encodeURIComponent(workerId)}`
+                            );
+                          }}
+                        >
+                          {workerId}
+                        </Button>
+                      </TableCell>
+                      <TableCell align="center">
+                        {value["whole-annotation"].wholeAnnotation}
+                      </TableCell>
+                      <TableCell align="center">{annList}</TableCell>
+                    </TableRow>
+                  );
+                })
+              ) : (
+                <></>
+              )}
+            </TableBody>
+          </Table>
+        </TableContainer>
+
+        {/* <GridList
           cols={2}
           className={classes.gridList}
           style={{ padding: "1vh" }}
@@ -153,7 +226,7 @@ export default function Annotations(props) {
           ) : (
             <></>
           )}
-        </GridList>
+        </GridList> */}
       </div>
     );
   }
