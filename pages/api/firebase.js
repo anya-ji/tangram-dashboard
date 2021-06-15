@@ -30,7 +30,12 @@ export const getUser = (workerId) => {
   return db.collection("users").doc(workerId).get();
 };
 
-export const getAllFiles = () => {
-  console.log("getAllFiles");
-  return db.collection("files").get();
+// export const getAllFiles = () => {
+//   console.log("getAllFiles");
+//   return db.collection("files").get();
+// };
+
+export const getCounts = () => {
+  console.log("getCounts");
+  return db.collection("counts").doc("counts").get();
 };

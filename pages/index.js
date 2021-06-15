@@ -42,16 +42,11 @@ export default function Home() {
   const router = useRouter();
   const [fileNameToCounts, setCounts] = useState({});
   useEffect(() => {
-    var newObj = {};
-    FB.getAllFiles()
-      .then((snapshot) => {
-        snapshot.forEach((doc) => {
-          const data = doc.data();
-          newObj[data["name"]] = data["count"];
-        });
-      })
-      .then(() => {
-        setCounts(newObj);
+    FB.getCounts()
+      .then((doc) => {
+        if (doc.exists) {
+          setCounts(doc.data());
+        }
       })
       .catch((e) => console.log(e));
   }, []);
