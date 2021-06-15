@@ -42,18 +42,20 @@ export default function Home() {
   const router = useRouter();
   const [fileNameToCounts, setCounts] = useState({});
   useEffect(() => {
-    var newObj = {};
-    FB.getAllFiles()
-      .then((snapshot) => {
-        snapshot.forEach((doc) => {
-          const data = doc.data();
-          newObj[data["name"]] = data["count"];
-        });
-      })
-      .then(() => {
-        setCounts(newObj);
-      })
-      .catch((e) => console.log(e));
+    if (!fileNameToCounts) {
+      var newObj = {};
+      FB.getAllFiles()
+        .then((snapshot) => {
+          snapshot.forEach((doc) => {
+            const data = doc.data();
+            newObj[data["name"]] = data["count"];
+          });
+        })
+        .then(() => {
+          setCounts(newObj);
+        })
+        .catch((e) => console.log(e));
+    }
   }, []);
 
   if (!fileNameToCounts) {
