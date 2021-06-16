@@ -13,7 +13,7 @@ export const badExamples = [
     explanation: "Didn't split into parts (e.g. head, arms, etc.).",
   },
   {
-    whole: "woman in dress",
+    whole: "a stack of shapes",
     piece: {
       1: "square",
       2: "parallelogram",
