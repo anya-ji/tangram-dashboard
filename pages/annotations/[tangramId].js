@@ -160,7 +160,7 @@ export default function Annotations(props) {
                       </TableCell>
                       <TableCell align="center">{annList}</TableCell>
                       <TableCell align="center">
-                        {value["version"] ? "pilot1" : value["version"]}
+                        {value["version"] ? value["version"] : "pilot1"}
                       </TableCell>
                     </TableRow>
                   );
