@@ -122,6 +122,7 @@ export default function Annotations(props) {
                 <TableCell align="center">Worker</TableCell>
                 <TableCell align="center">Whole</TableCell>
                 <TableCell align="center">Piece</TableCell>
+                <TableCell align="center">Version</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -158,6 +159,9 @@ export default function Annotations(props) {
                         {value["whole-annotation"].wholeAnnotation}
                       </TableCell>
                       <TableCell align="center">{annList}</TableCell>
+                      <TableCell align="center">
+                        {value["version"] ? "pilot1" : value["version"]}
+                      </TableCell>
                     </TableRow>
                   );
                 })
