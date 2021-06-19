@@ -67,6 +67,6 @@ export const badExamples = [
       7: "woman's dress",
     },
     explanation:
-      "Could have left out woman's to avoid redundancy.",
+      'Could have left out "woman\'s" to avoid redundancy.',
   },
 ];
