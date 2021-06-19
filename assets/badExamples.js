@@ -58,10 +58,10 @@ export const badExamples = [
   {
     whole: "woman in dress",
     piece: {
-      1: "woman's head",
+      1: "woman's hair bun",
       2: "woman's right arm",
-      3: "woman's hair bun",
-      4: "woman's hair bun",
+      3: "woman's head",
+      4: "woman's head",
       5: "woman's left arm",
       6: "woman's dress",
       7: "woman's dress",
