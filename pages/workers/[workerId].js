@@ -48,6 +48,7 @@ export default function Worker(props) {
         .then((doc) => {
           if (doc.exists) {
             setAnnotations(doc.data());
+            console.log(doc.data());
           }
         })
         .catch((e) => console.log(e));
@@ -96,11 +97,7 @@ export default function Worker(props) {
             <TableBody>
               {annotations ? (
                 Object.entries(annotations).map(([key, value]) => {
-                  if (
-                    key != "assignmentId" &&
-                    key != "workerId" &&
-                    key != "hitId"
-                  ) {
+                  if (key.startsWith("page")) {
                     const colorInfo = makeColor(value["piece-annotation"]);
                     const colors = colorInfo["colors"];
                     const annList = makeAnnotation(colorInfo["annToColor"]);
