@@ -46,6 +46,7 @@ export default function Home() {
       .then((doc) => {
         if (doc.exists) {
           setCounts(doc.data());
+          console.log(doc.data());
         }
       })
       .catch((e) => console.log(e));

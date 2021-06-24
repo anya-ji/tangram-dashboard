@@ -48,7 +48,6 @@ export default function Worker(props) {
         .then((doc) => {
           if (doc.exists) {
             setAnnotations(doc.data());
-            console.log(doc.data());
           }
         })
         .catch((e) => console.log(e));

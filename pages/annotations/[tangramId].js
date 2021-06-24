@@ -61,7 +61,15 @@ export default function Annotations(props) {
       FB.getAnnotations(name)
         .then((doc) => {
           if (doc.exists) {
-            setAnnotations(doc.data());
+            var d = doc.data();
+            var annotationList = [];
+            Object.entries(d).map(([workerId, value]) => {
+              annotationList.push({ workerId: workerId, value: value });
+            });
+            annotationList.sort(
+              (a, b) => a["value"].submittedAt - b["value"].submittedAt
+            );
+            setAnnotations(annotationList);
           }
         })
         .catch((e) => console.log(e));
@@ -127,10 +135,13 @@ export default function Annotations(props) {
             </TableHead>
             <TableBody>
               {annotations ? (
-                Object.entries(annotations).map(([workerId, value]) => {
-                  const colorInfo = makeColor(value["piece-annotation"]);
-                  const colors = colorInfo["colors"];
-                  const annList = makeAnnotation(colorInfo["annToColor"]);
+                annotations.map((element) => {
+                  var value = element["value"];
+                  var workerId = element["workerId"];
+                  var colorInfo = makeColor(value["piece-annotation"]);
+                  var colors = colorInfo["colors"];
+                  var annList = makeAnnotation(colorInfo["annToColor"]);
+
                   return (
                     <TableRow key={workerId}>
                       <TableCell align="center">
@@ -171,50 +182,6 @@ export default function Annotations(props) {
             </TableBody>
           </Table>
         </TableContainer>
-
-        {/* <GridList
-          cols={2}
-          className={classes.gridList}
-          style={{ padding: "1vh" }}
-        >
-          {annotations ? (
-            Object.entries(annotations).map(([workerId, value]) => {
-              const colorInfo = makeColor(value["piece-annotation"]);
-              const colors = colorInfo["colors"];
-              const annList = makeAnnotation(colorInfo["annToColor"], workerId);
-              return (
-                <GridListTile key={workerId} rows={2}>
-                  <Tangram
-                    viewBox={viewBox}
-                    points={points}
-                    colors={colors}
-                  ></Tangram>
-
-                  <GridListTileBar
-                    title={value["whole-annotation"].wholeAnnotation}
-                    subtitle={annList}
-                    style={{ height: "15vh" }}
-                    actionIcon={
-                      <IconButton
-                        // aria-label={`info about `}
-                        className={classes.icon}
-                        onClick={() => {
-                          router.push(
-                            `/workers/${encodeURIComponent(workerId)}`
-                          );
-                        }}
-                      >
-                        <AccountCircleIcon />
-                      </IconButton>
-                    }
-                  ></GridListTileBar>
-                </GridListTile>
-              );
-            })
-          ) : (
-            <></>
-          )}
-        </GridList> */}
       </div>
     );
   }
