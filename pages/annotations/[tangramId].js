@@ -45,7 +45,10 @@ const useStyles = makeStyles((theme) => ({
   },
   table: {
     minWidth: 650,
-    margin: "1vh",
+    marginLeft: "5vh",
+    marginTop: "1vh",
+    marginBottom: "1vh",
+    width: "95%",
   },
 }));
 

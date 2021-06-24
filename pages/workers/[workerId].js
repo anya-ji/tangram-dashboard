@@ -32,22 +32,54 @@ const useStyles = makeStyles((theme) => ({
   },
   table: {
     minWidth: 650,
-    margin: "1vh",
+    marginLeft: "5vh",
+    marginTop: "1vh",
+    marginBottom: "1vh",
+    width: "95%",
   },
 }));
 
-export default function Worker(props) {
+export default function Worker() {
   const classes = useStyles();
   const router = useRouter();
   const { workerId } = router.query;
   const [annotations, setAnnotations] = useState();
+  const [languages, setLanguages] = useState();
 
   useEffect(() => {
     if (workerId) {
       FB.getUser(workerId)
         .then((doc) => {
           if (doc.exists) {
-            setAnnotations(doc.data());
+            var d = doc.data();
+            var annotationList = [];
+            var languagesList = {};
+            Object.entries(d).map(([key, value]) => {
+              if (key.startsWith("page")) {
+                annotationList.push({ key: key, value: value });
+              } else if (key === "engFirst" || key === "whereLearn") {
+                languagesList[key] = value;
+              } else if (key === "languages") {
+                var lang = [];
+                Object.entries(value).map(([k, v]) => {
+                  var sl = "";
+                  if ("specify" in v) {
+                    sl = v["language"] + "(" + v["specify"] + ")";
+                  } else {
+                    sl = v["language"];
+                  }
+                  lang.push(sl);
+                });
+                languagesList["languages"] = lang.join(", ");
+              }
+            });
+            annotationList.sort(
+              (a, b) => a["value"].submittedAt - b["value"].submittedAt
+            );
+            setAnnotations(annotationList);
+            if (Object.keys(languagesList).length !== 0) {
+              setLanguages(languagesList);
+            }
           }
         })
         .catch((e) => console.log(e));
@@ -85,6 +117,41 @@ export default function Worker(props) {
 
         <TableContainer component={Paper}>
           <Table className={classes.table} aria-label="simple table">
+            <TableBody>
+              <TableRow key="languages">
+                <TableCell component="th" scope="row">
+                  Languages
+                </TableCell>
+                <TableCell align="right">
+                  {languages ? languages["languages"] : "Unavailable"}
+                </TableCell>
+              </TableRow>
+              <TableRow key="eng-first">
+                <TableCell component="th" scope="row">
+                  First language English?
+                </TableCell>
+                <TableCell align="right">
+                  {languages
+                    ? languages["engFirst"]
+                      ? "Yes"
+                      : "No"
+                    : "Unavailable"}
+                </TableCell>
+              </TableRow>
+              <TableRow key="where-learn">
+                <TableCell component="th" scope="row">
+                  Where did you learn English?
+                </TableCell>
+                <TableCell align="right">
+                  {languages ? languages["whereLearn"] : "Unavailable"}
+                </TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+        </TableContainer>
+
+        <TableContainer component={Paper}>
+          <Table className={classes.table} aria-label="simple table">
             <TableHead>
               <TableRow>
                 <TableCell align="center">Tangram</TableCell>
@@ -95,44 +162,43 @@ export default function Worker(props) {
             </TableHead>
             <TableBody>
               {annotations ? (
-                Object.entries(annotations).map(([key, value]) => {
-                  if (key.startsWith("page")) {
-                    const colorInfo = makeColor(value["piece-annotation"]);
-                    const colors = colorInfo["colors"];
-                    const annList = makeAnnotation(colorInfo["annToColor"]);
-                    return (
-                      <TableRow key={key}>
-                        <TableCell align="center">
-                          {
-                            <Tangram
-                              viewBox={tangrams[key + ".svg"]["viewBox"]}
-                              points={tangrams[key + ".svg"]["points"]}
-                              colors={colors}
-                            ></Tangram>
-                          }
-                        </TableCell>
-                        <TableCell align="center">
-                          <Button
-                            variant="contained"
-                            color="primary"
-                            onClick={() => {
-                              router.push(
-                                `/annotations/${encodeURIComponent(
-                                  key + ".svg"
-                                )}`
-                              );
-                            }}
-                          >
-                            {key}
-                          </Button>
-                        </TableCell>
-                        <TableCell align="center">
-                          {value["whole-annotation"].wholeAnnotation}
-                        </TableCell>
-                        <TableCell align="center">{annList}</TableCell>
-                      </TableRow>
-                    );
-                  }
+                annotations.map((element) => {
+                  var key = element["key"];
+                  var value = element["value"];
+                  var colorInfo = makeColor(value["piece-annotation"]);
+                  var colors = colorInfo["colors"];
+                  var annList = makeAnnotation(colorInfo["annToColor"]);
+
+                  return (
+                    <TableRow key={key}>
+                      <TableCell align="center">
+                        {
+                          <Tangram
+                            viewBox={tangrams[key + ".svg"]["viewBox"]}
+                            points={tangrams[key + ".svg"]["points"]}
+                            colors={colors}
+                          ></Tangram>
+                        }
+                      </TableCell>
+                      <TableCell align="center">
+                        <Button
+                          variant="contained"
+                          color="primary"
+                          onClick={() => {
+                            router.push(
+                              `/annotations/${encodeURIComponent(key + ".svg")}`
+                            );
+                          }}
+                        >
+                          {key}
+                        </Button>
+                      </TableCell>
+                      <TableCell align="center">
+                        {value["whole-annotation"].wholeAnnotation}
+                      </TableCell>
+                      <TableCell align="center">{annList}</TableCell>
+                    </TableRow>
+                  );
                 })
               ) : (
                 <></>
