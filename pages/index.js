@@ -8,6 +8,7 @@ import Button from "@material-ui/core/Button";
 import GridList from "@material-ui/core/GridList";
 import GridListTile from "@material-ui/core/GridListTile";
 import GridListTileBar from "@material-ui/core/GridListTileBar";
+
 import { useRouter } from "next/router";
 import * as FB from "./api/firebase";
 import { useState, useEffect } from "react";
@@ -38,11 +39,19 @@ export default function Home() {
   const classes = useStyles();
   const router = useRouter();
   const [fileNameToCounts, setCounts] = useState({});
+  const [orderedTangrams, setOrdered] = useState({});
   useEffect(() => {
     FB.getCounts()
       .then((doc) => {
         if (doc.exists) {
           setCounts(doc.data());
+          const ordered = Object.keys(tangrams)
+            .sort()
+            .reduce((obj, key) => {
+              obj[key] = tangrams[key];
+              return obj;
+            }, {});
+          setOrdered(ordered);
         }
       })
       .catch((e) => console.log(e));
@@ -51,6 +60,7 @@ export default function Home() {
   if (!fileNameToCounts) {
     return <></>;
   }
+
   return (
     <div className={classes.root}>
       <Head>
@@ -67,12 +77,12 @@ export default function Home() {
       </AppBar>
 
       <GridList
-        cols={4}
+        cols={6}
         className={classes.gridList}
-        style={{ margin: "1vh", padding: "1vh" }}
+        style={{ margin: "12px", padding: "12px" }}
       >
         {fileNameToCounts ? (
-          Object.entries(tangrams).map(([key, value]) => {
+          Object.entries(orderedTangrams).map(([key, value]) => {
             const name = key.replace(".svg", "");
             if (
               fileNameToCounts[name] != undefined &&
