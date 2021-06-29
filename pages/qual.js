@@ -92,8 +92,8 @@ export default function Qual(props) {
                       <TableCell align="center">
                         {
                           <Tangram
-                            viewBox={tangrams["demo.svg"].viewBox}
-                            points={tangrams["demo.svg"].points}
+                            viewBox={tangrams["a.svg"].viewBox}
+                            points={tangrams["a.svg"].points}
                             colors={colors}
                           ></Tangram>
                         }
