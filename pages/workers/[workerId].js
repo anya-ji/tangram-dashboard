@@ -64,9 +64,16 @@ export default function Worker() {
                 Object.entries(value).map(([k, v]) => {
                   var sl = "";
                   if ("specify" in v) {
-                    sl = v["language"] + "(" + v["specify"] + ")";
+                    sl =
+                      v["language"] +
+                      "(" +
+                      v["specify"] +
+                      ")" +
+                      "(" +
+                      v["proficiency"] +
+                      ")";
                   } else {
-                    sl = v["language"];
+                    sl = v["language"] + "(" + v["proficiency"] + ")";
                   }
                   lang.push(sl);
                 });
@@ -158,6 +165,7 @@ export default function Worker() {
                 <TableCell align="center">File</TableCell>
                 <TableCell align="center">Whole</TableCell>
                 <TableCell align="center">Piece</TableCell>
+                <TableCell align="center">Version</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -197,6 +205,7 @@ export default function Worker() {
                         {value["whole-annotation"].wholeAnnotation}
                       </TableCell>
                       <TableCell align="center">{annList}</TableCell>
+                      <TableCell align="center">{value["version"]}</TableCell>
                     </TableRow>
                   );
                 })
