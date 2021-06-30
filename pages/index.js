@@ -8,11 +8,9 @@ import Button from "@material-ui/core/Button";
 import GridList from "@material-ui/core/GridList";
 import GridListTile from "@material-ui/core/GridListTile";
 import GridListTileBar from "@material-ui/core/GridListTileBar";
-
 import { useRouter } from "next/router";
 import * as FB from "./api/firebase";
 import { useState, useEffect } from "react";
-import Head from "next/head";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -63,18 +61,18 @@ export default function Home() {
 
   return (
     <div className={classes.root}>
-      <Head>
-        <title>Tangrams Dashboard</title>
-        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-      </Head>
       <AppBar position="static">
         <Toolbar>
           <Typography variant="h6" className={classes.title}>
             Tangrams
           </Typography>
-          <Button color="inherit" style={{ right: "12px" }} onClick={()=>{
-            router.push(`/overview`);
-          }}>
+          <Button
+            color="inherit"
+            style={{ right: "12px" }}
+            onClick={() => {
+              router.push(`/overview`);
+            }}
+          >
             Overview
           </Button>
         </Toolbar>
@@ -119,14 +117,6 @@ export default function Home() {
                     subtitle={
                       <span>{fileNameToCounts[name] + " annotations"}</span>
                     }
-                    // actionIcon={
-                    //   <IconButton
-                    //     aria-label={`info about `}
-                    //     className={classes.icon}
-                    //   >
-                    //     <InfoIcon />
-                    //   </IconButton>
-                    // }
                   />
                 </GridListTile>
               );
