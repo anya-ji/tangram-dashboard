@@ -72,7 +72,11 @@ export default function Home() {
           <Typography variant="h6" className={classes.title}>
             Tangrams
           </Typography>
-          {/* <Button color="inherit">Login</Button> */}
+          <Button color="inherit" style={{ right: "12px" }} onClick={()=>{
+            router.push(`/overview`);
+          }}>
+            Overview
+          </Button>
         </Toolbar>
       </AppBar>
 
