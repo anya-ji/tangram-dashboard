@@ -15,7 +15,7 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
-import data from "../assets/overview-batch1.json";
+import data from "../assets/overview1-3.json";
 
 const useStyles = makeStyles((theme) => ({
   root: {
