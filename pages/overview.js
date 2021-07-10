@@ -66,7 +66,7 @@ function shuffle(array) {
   return array;
 }
 
-export default function Overview(props) {
+export default function Overview() {
   const classes = useStyles();
   const router = useRouter();
   const [annotations, setAnnotations] = useState();
@@ -97,7 +97,7 @@ export default function Overview(props) {
             Home
           </Button>
           <Typography variant="h6" align="center" className={classes.title}>
-            Overview
+            Overview (Batch1-3)
           </Typography>
           <Button
             color="inherit"

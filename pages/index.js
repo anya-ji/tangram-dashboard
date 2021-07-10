@@ -68,6 +68,15 @@ export default function Home() {
           </Typography>
           <Button
             color="inherit"
+            style={{ right: "24px" }}
+            onClick={() => {
+              router.push(`/agreement`);
+            }}
+          >
+            Statistics
+          </Button>
+          <Button
+            color="inherit"
             style={{ right: "12px" }}
             onClick={() => {
               router.push(`/overview`);
