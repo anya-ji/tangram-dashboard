@@ -23,15 +23,12 @@ const useStyles = makeStyles((theme) => ({
     overflow: "hidden",
     backgroundColor: theme.palette.background.paper,
   },
-  title: {
-    flexGrow: 1,
-  },
   gridList: {
     width: "100%",
     height: "100%",
   },
-  icon: {
-    color: "rgba(255, 255, 255, 0.54)",
+  toolbarButtons: {
+    marginLeft: "auto",
   },
 }));
 
@@ -75,40 +72,40 @@ export default function Home() {
     <div className={classes.root}>
       <AppBar position="static">
         <Toolbar>
-          <Typography variant="h6" className={classes.title}>
-            Tangrams
-          </Typography>
-          <Button
-            color="inherit"
-            style={{ right: "24px" }}
-            onClick={handleClick}
-          >
-            Statistics
-          </Button>
-          <Menu
-            id="simple-menu"
-            anchorEl={anchorEl}
-            keepMounted
-            open={Boolean(anchorEl)}
-            onClose={handleClose}
-          >
-            <MenuItem
+          <Typography variant="h6">Tangrams</Typography>
+          <div className={classes.toolbarButtons}>
+            <Button
+              color="inherit"
+              style={{ right: "24px" }}
+              onClick={handleClick}
+            >
+              Statistics
+            </Button>
+            <Menu
+              id="simple-menu"
+              anchorEl={anchorEl}
+              keepMounted
+              open={Boolean(anchorEl)}
+              onClose={handleClose}
+            >
+              <MenuItem
+                onClick={() => {
+                  router.push(`/statistics/agreement`);
+                }}
+              >
+                Agreement
+              </MenuItem>
+            </Menu>
+            <Button
+              color="inherit"
+              style={{ right: "12px" }}
               onClick={() => {
-                router.push(`/statistics/agreement`);
+                router.push(`/overview`);
               }}
             >
-              Agreement
-            </MenuItem>
-          </Menu>
-          <Button
-            color="inherit"
-            style={{ right: "12px" }}
-            onClick={() => {
-              router.push(`/overview`);
-            }}
-          >
-            Overview
-          </Button>
+              Overview
+            </Button>
+          </div>
         </Toolbar>
       </AppBar>
 
