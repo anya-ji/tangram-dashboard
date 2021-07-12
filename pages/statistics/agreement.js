@@ -175,7 +175,7 @@ export default function Agreement() {
             Home
           </Button>
           <Typography variant="h6" align="center" className={classes.title}>
-            Agreement (Batch1-5)
+            Agreement
           </Typography>
         </Toolbar>
       </AppBar>
