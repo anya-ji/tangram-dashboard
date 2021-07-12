@@ -11,6 +11,8 @@ import GridListTileBar from "@material-ui/core/GridListTileBar";
 import { useRouter } from "next/router";
 import * as FB from "./api/firebase";
 import { useState, useEffect } from "react";
+import Menu from "@material-ui/core/Menu";
+import MenuItem from "@material-ui/core/MenuItem";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -38,6 +40,8 @@ export default function Home() {
   const router = useRouter();
   const [fileNameToCounts, setCounts] = useState({});
   const [orderedTangrams, setOrdered] = useState({});
+  const [anchorEl, setAnchorEl] = useState(null);
+
   useEffect(() => {
     FB.getCounts()
       .then((doc) => {
@@ -59,6 +63,14 @@ export default function Home() {
     return <></>;
   }
 
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
   return (
     <div className={classes.root}>
       <AppBar position="static">
@@ -69,12 +81,25 @@ export default function Home() {
           <Button
             color="inherit"
             style={{ right: "24px" }}
-            onClick={() => {
-              router.push(`/agreement`);
-            }}
+            onClick={handleClick}
           >
             Statistics
           </Button>
+          <Menu
+            id="simple-menu"
+            anchorEl={anchorEl}
+            keepMounted
+            open={Boolean(anchorEl)}
+            onClose={handleClose}
+          >
+            <MenuItem
+              onClick={() => {
+                router.push(`/statistics/agreement`);
+              }}
+            >
+              Agreement
+            </MenuItem>
+          </Menu>
           <Button
             color="inherit"
             style={{ right: "12px" }}

@@ -14,7 +14,7 @@ import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
 import AppBar from "@material-ui/core/AppBar";
 import Button from "@material-ui/core/Button";
-import agreement from "../assets/file_agreement.json";
+import agreement from "../../assets/file_agreement.json";
 import { useRouter } from "next/router";
 
 function createData(name, segmentation, whole, piece) {
@@ -75,15 +75,7 @@ const headCells = [
 ];
 
 function EnhancedTableHead(props) {
-  const {
-    classes,
-    onSelectAllClick,
-    order,
-    orderBy,
-    numSelected,
-    rowCount,
-    onRequestSort,
-  } = props;
+  const { order, orderBy, onRequestSort } = props;
   const createSortHandler = (property) => (event) => {
     onRequestSort(event, property);
   };
@@ -116,9 +108,7 @@ function EnhancedTableHead(props) {
 
 EnhancedTableHead.propTypes = {
   classes: PropTypes.object.isRequired,
-  numSelected: PropTypes.number.isRequired,
   onRequestSort: PropTypes.func.isRequired,
-  onSelectAllClick: PropTypes.func.isRequired,
   order: PropTypes.oneOf(["asc", "desc"]).isRequired,
   orderBy: PropTypes.string.isRequired,
   rowCount: PropTypes.number.isRequired,
@@ -145,8 +135,6 @@ export default function Agreement() {
   const classes = useStyles();
   const [order, setOrder] = React.useState("asc");
   const [orderBy, setOrderBy] = React.useState("segmentation");
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(1004);
   const [rows, setRows] = React.useState([]);
   const router = useRouter();
 
@@ -165,9 +153,6 @@ export default function Agreement() {
     setOrder(isAsc ? "desc" : "asc");
     setOrderBy(property);
   };
-
-  const emptyRows =
-    rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
   return (
     <>
@@ -212,9 +197,8 @@ export default function Agreement() {
                 rowCount={rows.length}
               />
               <TableBody>
-                {stableSort(rows, getComparator(order, orderBy))
-                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  .map((row, index) => {
+                {stableSort(rows, getComparator(order, orderBy)).map(
+                  (row, index) => {
                     return (
                       <TableRow key={row.name}>
                         <TableCell align="center">
@@ -237,11 +221,7 @@ export default function Agreement() {
                         <TableCell align="right">{row.piece}</TableCell>
                       </TableRow>
                     );
-                  })}
-                {emptyRows > 0 && (
-                  <TableRow style={{ height: 33 * emptyRows }}>
-                    <TableCell colSpan={6} />
-                  </TableRow>
+                  }
                 )}
               </TableBody>
             </Table>

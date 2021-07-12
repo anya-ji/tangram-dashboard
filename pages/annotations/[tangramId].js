@@ -16,6 +16,7 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
+import agreement from "../../assets/file_agreement.json";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -43,6 +44,14 @@ const useStyles = makeStyles((theme) => ({
     marginTop: "1vh",
     marginBottom: "1vh",
     width: "95%",
+  },
+  uptable: {
+    minWidth: 650,
+    marginLeft: "20%",
+    marginRight: "20%",
+    marginTop: "1vh",
+    marginBottom: "1vh",
+    width: "60%",
   },
 }));
 
@@ -118,6 +127,43 @@ export default function Annotations(props) {
             ]}
           ></Tangram>
         </div>
+
+        <TableContainer component={Paper}>
+          <Table className={classes.uptable} aria-label="simple table">
+            <TableBody>
+              <TableRow key="languages">
+                <TableCell component="th" scope="row">
+                  Segmentation agreement (1=lowest, 7=highest)
+                </TableCell>
+                <TableCell align="right">
+                  {tangramId
+                    ? agreement[tangramId.replace(".svg", "")]["segmentation"]
+                    : ""}
+                </TableCell>
+              </TableRow>
+              <TableRow key="eng-first">
+                <TableCell component="th" scope="row">
+                  Whole shape annotation agreement (0=lowest, 1=highest)
+                </TableCell>
+                <TableCell align="right">
+                  {tangramId
+                    ? agreement[tangramId.replace(".svg", "")]["whole"]
+                    : ""}
+                </TableCell>
+              </TableRow>
+              <TableRow key="where-learn">
+                <TableCell component="th" scope="row">
+                  By-part annotation agreement (0=lowest, 1=highest)
+                </TableCell>
+                <TableCell align="right">
+                  {tangramId
+                    ? agreement[tangramId.replace(".svg", "")]["piece"]
+                    : ""}
+                </TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+        </TableContainer>
 
         <TableContainer component={Paper}>
           <Table className={classes.table} aria-label="simple table">
