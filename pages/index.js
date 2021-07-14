@@ -96,7 +96,7 @@ export default function Home() {
                 Agreement
               </MenuItem>
             </Menu>
-            <Button
+            {/* <Button
               color="inherit"
               style={{ right: "12px" }}
               onClick={() => {
@@ -104,7 +104,7 @@ export default function Home() {
               }}
             >
               Overview
-            </Button>
+            </Button> */}
           </div>
         </Toolbar>
       </AppBar>

@@ -16,6 +16,8 @@ import AppBar from "@material-ui/core/AppBar";
 import Button from "@material-ui/core/Button";
 import agreement from "../../assets/file_agreement.json";
 import { useRouter } from "next/router";
+import Tangram from "../../components/tangram";
+import tangrams from "../../assets/tangrams.json";
 
 function createData(name, segmentation, whole, piece) {
   return { name, segmentation, whole, piece };
@@ -55,6 +57,12 @@ const headCells = [
     label: "Tangram",
   },
   {
+    id: "file",
+    numeric: false,
+    disablePadding: false,
+    label: "File",
+  },
+  {
     id: "segmentation",
     numeric: true,
     disablePadding: false,
@@ -92,7 +100,9 @@ function EnhancedTableHead(props) {
           >
             <TableSortLabel
               active={
-                headCell.id === "tangram" ? false : orderBy === headCell.id
+                headCell.id === "tangram" || headCell.id === "tangram"
+                  ? false
+                  : orderBy === headCell.id
               }
               direction={orderBy === headCell.id ? order : "asc"}
               onClick={createSortHandler(headCell.id)}
@@ -201,6 +211,21 @@ export default function Agreement() {
                   (row, index) => {
                     return (
                       <TableRow key={row.name}>
+                        <TableCell align="center">
+                          <Tangram
+                            viewBox={tangrams[row.name + ".svg"]["viewBox"]}
+                            points={tangrams[row.name + ".svg"]["points"]}
+                            colors={[
+                              "lightgray",
+                              "lightgray",
+                              "lightgray",
+                              "lightgray",
+                              "lightgray",
+                              "lightgray",
+                              "lightgray",
+                            ]}
+                          ></Tangram>
+                        </TableCell>
                         <TableCell align="center">
                           <Button
                             variant="contained"
