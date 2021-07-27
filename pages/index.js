@@ -13,6 +13,7 @@ import * as FB from "./api/firebase";
 import { useState, useEffect } from "react";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
+import { sampled } from "../components/util";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -30,6 +31,9 @@ const useStyles = makeStyles((theme) => ({
   toolbarButtons: {
     marginLeft: "auto",
   },
+  title: {
+    flexGrow: 1,
+  },
 }));
 
 export default function Home() {
@@ -38,6 +42,7 @@ export default function Home() {
   const [fileNameToCounts, setCounts] = useState({});
   const [orderedTangrams, setOrdered] = useState({});
   const [anchorEl, setAnchorEl] = useState(null);
+  const [showDense, setDense] = useState(false);
 
   useEffect(() => {
     FB.getCounts()
@@ -72,11 +77,31 @@ export default function Home() {
     <div className={classes.root}>
       <AppBar position="static">
         <Toolbar>
-          <Typography variant="h6">Tangrams</Typography>
+          <Typography variant="h6" className={classes.title}>
+            Tangrams
+          </Typography>
           <div className={classes.toolbarButtons}>
             <Button
               color="inherit"
               style={{ right: "24px" }}
+              onClick={() => {
+                setDense(!showDense);
+              }}
+            >
+              {showDense ? "All" : "Dense"}
+            </Button>
+            <Button
+              color="inherit"
+              style={{ right: "12px" }}
+              onClick={() => {
+                router.push(`/statistics/agreement`);
+              }}
+            >
+              Statistics
+            </Button>
+            {/* <Button
+              color="inherit"
+              style={{ right: "12px" }}
               onClick={handleClick}
             >
               Statistics
@@ -95,16 +120,7 @@ export default function Home() {
               >
                 Agreement
               </MenuItem>
-            </Menu>
-            {/* <Button
-              color="inherit"
-              style={{ right: "12px" }}
-              onClick={() => {
-                router.push(`/overview`);
-              }}
-            >
-              Overview
-            </Button> */}
+            </Menu> */}
           </div>
         </Toolbar>
       </AppBar>
@@ -122,35 +138,36 @@ export default function Home() {
               fileNameToCounts[name] !== 0
             ) {
               // if file exists in database and count is not 0
-              return (
-                <GridListTile
-                  key={name}
-                  rows={1.5}
-                  onClick={() => {
-                    router.push(`/annotations/${encodeURIComponent(key)}`);
-                  }}
-                >
-                  <Tangram
-                    viewBox={value["viewBox"]}
-                    points={value["points"]}
-                    colors={[
-                      "lightgray",
-                      "lightgray",
-                      "lightgray",
-                      "lightgray",
-                      "lightgray",
-                      "lightgray",
-                      "lightgray",
-                    ]}
-                  ></Tangram>
-                  <GridListTileBar
-                    title={name}
-                    subtitle={
-                      <span>{fileNameToCounts[name] + " annotations"}</span>
-                    }
-                  />
-                </GridListTile>
-              );
+              if (!showDense || (showDense && sampled.includes(name + ".svg")))
+                return (
+                  <GridListTile
+                    key={name}
+                    rows={1.5}
+                    onClick={() => {
+                      router.push(`/annotations/${encodeURIComponent(key)}`);
+                    }}
+                  >
+                    <Tangram
+                      viewBox={value["viewBox"]}
+                      points={value["points"]}
+                      colors={[
+                        "lightgray",
+                        "lightgray",
+                        "lightgray",
+                        "lightgray",
+                        "lightgray",
+                        "lightgray",
+                        "lightgray",
+                      ]}
+                    ></Tangram>
+                    <GridListTileBar
+                      title={name}
+                      subtitle={
+                        <span>{fileNameToCounts[name] + " annotations"}</span>
+                      }
+                    />
+                  </GridListTile>
+                );
             }
           })
         ) : (
