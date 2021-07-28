@@ -95,6 +95,7 @@ export default function Qual(props) {
                             viewBox={tangrams["a.svg"].viewBox}
                             points={tangrams["a.svg"].points}
                             colors={colors}
+                            transform={tangrams["a.svg"].transform}
                           ></Tangram>
                         }
                       </TableCell>

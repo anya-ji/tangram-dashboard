@@ -224,6 +224,7 @@ export default function Agreement() {
                               "lightgray",
                               "lightgray",
                             ]}
+                            transform={tangrams[row.name + ".svg"]["transform"]}
                           ></Tangram>
                         </TableCell>
                         <TableCell align="center">

@@ -159,6 +159,7 @@ export default function Home() {
                         "lightgray",
                         "lightgray",
                       ]}
+                      transform={value["transform"]}
                     ></Tangram>
                     <GridListTileBar
                       title={name}

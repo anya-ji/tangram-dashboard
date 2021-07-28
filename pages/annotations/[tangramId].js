@@ -87,6 +87,7 @@ export default function Annotations(props) {
   } else {
     const viewBox = tangrams[tangramId]["viewBox"];
     const points = tangrams[tangramId]["points"];
+    const transform = tangrams[tangramId]["transform"];
     return (
       <div className={classes.root}>
         <AppBar position="static">
@@ -125,6 +126,7 @@ export default function Annotations(props) {
               "lightgray",
               "lightgray",
             ]}
+            transform={transform}
           ></Tangram>
         </div>
 
@@ -193,6 +195,7 @@ export default function Annotations(props) {
                             viewBox={viewBox}
                             points={points}
                             colors={colors}
+                            transform={transform}
                           ></Tangram>
                         }
                       </TableCell>

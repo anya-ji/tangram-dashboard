@@ -139,6 +139,7 @@ export default function Overview() {
                           viewBox={tangrams[tangramId]["viewBox"]}
                           points={tangrams[tangramId]["points"]}
                           colors={colors}
+                          transform={tangrams[tangramId]["transform"]}
                         ></Tangram>
                       }
                     </TableCell>

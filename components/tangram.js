@@ -17,6 +17,7 @@ function SvgComponent(props) {
         points={props.points[0]}
         stroke="white"
         strokeWidth={1}
+        transform={props.transform[0]}
       />
       <polygon
         fill={props.colors[1]}
@@ -24,6 +25,7 @@ function SvgComponent(props) {
         points={props.points[1]}
         stroke="white"
         strokeWidth={1}
+        transform={props.transform[1]}
       />
       <polygon
         fill={props.colors[2]}
@@ -31,6 +33,7 @@ function SvgComponent(props) {
         points={props.points[2]}
         stroke="white"
         strokeWidth={1}
+        transform={props.transform[2]}
       />
       <polygon
         fill={props.colors[3]}
@@ -38,6 +41,7 @@ function SvgComponent(props) {
         points={props.points[3]}
         stroke="white"
         strokeWidth={1}
+        transform={props.transform[3]}
       />
       <polygon
         fill={props.colors[4]}
@@ -45,6 +49,7 @@ function SvgComponent(props) {
         points={props.points[4]}
         stroke="white"
         strokeWidth={1}
+        transform={props.transform[4]}
       />
       <polygon
         fill={props.colors[5]}
@@ -52,6 +57,7 @@ function SvgComponent(props) {
         points={props.points[5]}
         stroke="white"
         strokeWidth={1}
+        transform={props.transform[5]}
       />
       <polygon
         fill={props.colors[6]}
@@ -59,6 +65,7 @@ function SvgComponent(props) {
         points={props.points[6]}
         stroke="white"
         strokeWidth={1}
+        transform={props.transform[6]}
       />
     </svg>
   );
