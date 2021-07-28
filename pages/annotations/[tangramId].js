@@ -136,7 +136,7 @@ export default function Annotations(props) {
                   Segmentation agreement (1=lowest, 7=highest)
                 </TableCell>
                 <TableCell align="right">
-                  {tangramId
+                  {tangramId && agreement[tangramId.replace(".svg", "")]
                     ? agreement[tangramId.replace(".svg", "")]["segmentation"]
                     : ""}
                 </TableCell>
@@ -146,7 +146,7 @@ export default function Annotations(props) {
                   Whole shape annotation agreement (0=lowest, 1=highest)
                 </TableCell>
                 <TableCell align="right">
-                  {tangramId
+                  {tangramId && agreement[tangramId.replace(".svg", "")]
                     ? agreement[tangramId.replace(".svg", "")]["whole"]
                     : ""}
                 </TableCell>
@@ -156,7 +156,7 @@ export default function Annotations(props) {
                   By-part annotation agreement (0=lowest, 1=highest)
                 </TableCell>
                 <TableCell align="right">
-                  {tangramId
+                  {tangramId && agreement[tangramId.replace(".svg", "")]
                     ? agreement[tangramId.replace(".svg", "")]["piece"]
                     : ""}
                 </TableCell>
