@@ -185,7 +185,7 @@ export default function Worker() {
                             viewBox={tangrams[key + ".svg"]["viewBox"]}
                             points={tangrams[key + ".svg"]["points"]}
                             colors={colors}
-                            points={tangrams[key + ".svg"]["transform"]}
+                            transform={tangrams[key + ".svg"]["transform"]}
                           ></Tangram>
                         }
                       </TableCell>
