@@ -179,7 +179,7 @@ export default function Worker() {
 
                   return (
                     <TableRow key={key}>
-                      <TableCell align="center">
+                      <TableCell align="center" height="150px" width="20%">
                         {
                           <Tangram
                             viewBox={tangrams[key + ".svg"]["viewBox"]}
@@ -189,7 +189,7 @@ export default function Worker() {
                           ></Tangram>
                         }
                       </TableCell>
-                      <TableCell align="center">
+                      <TableCell align="center" height="150px" width="20%">
                         <Button
                           variant="contained"
                           color="primary"
@@ -202,11 +202,11 @@ export default function Worker() {
                           {key}
                         </Button>
                       </TableCell>
-                      <TableCell align="center">
+                      <TableCell align="center" height="150px" width="20%">
                         {value["whole-annotation"].wholeAnnotation}
                       </TableCell>
-                      <TableCell align="center">{annList}</TableCell>
-                      <TableCell align="center">{value["version"]}</TableCell>
+                      <TableCell align="center" height="150px" width="20%">{annList}</TableCell>
+                      <TableCell align="center" height="150px" width="20%">{value["version"]}</TableCell>
                     </TableRow>
                   );
                 })

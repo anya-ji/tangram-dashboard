@@ -189,7 +189,7 @@ export default function Annotations(props) {
 
                   return (
                     <TableRow key={workerId}>
-                      <TableCell align="center">
+                      <TableCell align="center" height="150px" width="20%">
                         {
                           <Tangram
                             viewBox={viewBox}
@@ -199,7 +199,7 @@ export default function Annotations(props) {
                           ></Tangram>
                         }
                       </TableCell>
-                      <TableCell align="center">
+                      <TableCell align="center" height="150px" width="20%">
                         <Button
                           variant="contained"
                           color="primary"
@@ -212,11 +212,13 @@ export default function Annotations(props) {
                           {workerId}
                         </Button>
                       </TableCell>
-                      <TableCell align="center">
+                      <TableCell align="center" height="150px" width="20%">
                         {value["whole-annotation"].wholeAnnotation}
                       </TableCell>
-                      <TableCell align="center">{annList}</TableCell>
-                      <TableCell align="center">
+                      <TableCell align="center" height="150px" width="20%">
+                        {annList}
+                      </TableCell>
+                      <TableCell align="center" height="150px" width="20%">
                         {value["version"] ? value["version"] : "pilot1"}
                       </TableCell>
                     </TableRow>
