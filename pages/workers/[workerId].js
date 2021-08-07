@@ -45,6 +45,7 @@ export default function Worker() {
   const { workerId } = router.query;
   const [annotations, setAnnotations] = useState();
   const [languages, setLanguages] = useState();
+  var idx = 0;
 
   useEffect(() => {
     if (workerId) {
@@ -161,6 +162,7 @@ export default function Worker() {
           <Table className={classes.table} aria-label="simple table">
             <TableHead>
               <TableRow>
+                <TableCell align="center">Index</TableCell>
                 <TableCell align="center">Tangram</TableCell>
                 <TableCell align="center">File</TableCell>
                 <TableCell align="center">Whole</TableCell>
@@ -176,9 +178,13 @@ export default function Worker() {
                   var colorInfo = makeColor(value["piece-annotation"]);
                   var colors = colorInfo["colors"];
                   var annList = makeAnnotation(colorInfo["annToColor"]);
+                  idx++;
 
                   return (
                     <TableRow key={key}>
+                      <TableCell align="center" height="150px" width="5%">
+                        {idx}
+                      </TableCell>
                       <TableCell align="center" height="150px" width="20%">
                         {
                           <Tangram
@@ -205,8 +211,12 @@ export default function Worker() {
                       <TableCell align="center" height="150px" width="20%">
                         {value["whole-annotation"].wholeAnnotation}
                       </TableCell>
-                      <TableCell align="center" height="150px" width="20%">{annList}</TableCell>
-                      <TableCell align="center" height="150px" width="20%">{value["version"]}</TableCell>
+                      <TableCell align="center" height="150px" width="20%">
+                        {annList}
+                      </TableCell>
+                      <TableCell align="center" height="150px" width="15%">
+                        {value["version"]}
+                      </TableCell>
                     </TableRow>
                   );
                 })

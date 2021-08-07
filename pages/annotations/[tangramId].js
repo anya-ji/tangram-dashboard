@@ -60,6 +60,7 @@ export default function Annotations(props) {
   const router = useRouter();
   const { tangramId } = router.query;
   const [annotations, setAnnotations] = useState();
+  var idx = 0;
 
   useEffect(() => {
     if (tangramId) {
@@ -171,6 +172,7 @@ export default function Annotations(props) {
           <Table className={classes.table} aria-label="simple table">
             <TableHead>
               <TableRow>
+                <TableCell align="center">Index</TableCell>
                 <TableCell align="center">Tangram</TableCell>
                 <TableCell align="center">Worker</TableCell>
                 <TableCell align="center">Whole</TableCell>
@@ -186,9 +188,13 @@ export default function Annotations(props) {
                   var colorInfo = makeColor(value["piece-annotation"]);
                   var colors = colorInfo["colors"];
                   var annList = makeAnnotation(colorInfo["annToColor"]);
+                  idx++;
 
                   return (
                     <TableRow key={workerId}>
+                      <TableCell align="center" height="150px" width="5%">
+                        {idx}
+                      </TableCell>
                       <TableCell align="center" height="150px" width="20%">
                         {
                           <Tangram
@@ -218,7 +224,7 @@ export default function Annotations(props) {
                       <TableCell align="center" height="150px" width="20%">
                         {annList}
                       </TableCell>
-                      <TableCell align="center" height="150px" width="20%">
+                      <TableCell align="center" height="150px" width="15%">
                         {value["version"] ? value["version"] : "pilot1"}
                       </TableCell>
                     </TableRow>
