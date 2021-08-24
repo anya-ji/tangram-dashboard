@@ -73,6 +73,7 @@ export default function Home() {
     setAnchorEl(null);
   };
 
+  return;
   return (
     <div className={classes.root}>
       <AppBar position="static">
