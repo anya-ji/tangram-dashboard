@@ -9,7 +9,7 @@ import ButtonGroup from "@material-ui/core/ButtonGroup";
 import { useRouter } from "next/router";
 import * as FB from "../api/firebase";
 import { useState, useEffect } from "react";
-import { makeColor, makeAnnotation } from "../../components/util";
+import { makeAnnotation2 } from "../../components/util";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -193,7 +193,7 @@ export default function Annotations(props) {
                             />
                           </TableCell>
                           <TableCell align="center" height="50px" width="12.5%">
-                            {element["target_text"]}
+                            {makeAnnotation2(element["target_text"])}
                           </TableCell>
                           <TableCell align="center" height="50px" width="12.5%">
                             {element["target_prob"]}
@@ -205,7 +205,7 @@ export default function Annotations(props) {
                             />
                           </TableCell>
                           <TableCell align="center" height="50px" width="12.5%">
-                            {element["distractor0_text"]}
+                            {makeAnnotation2(element["distractor0_text"])}
                           </TableCell>
                           <TableCell align="center" height="50px" width="12.5%">
                             {element["distractor0_prob"]}
@@ -236,7 +236,7 @@ export default function Annotations(props) {
                             />
                           </TableCell>
                           <TableCell align="center" height="50px" width="12.5%">
-                            {element["distractor" + i + "_text"]}
+                            {makeAnnotation2(element["distractor" + i + "_text"])}
                           </TableCell>
                           <TableCell align="center" height="50px" width="12.5%">
                             {element["distractor" + i + "_prob"]}

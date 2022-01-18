@@ -8,6 +8,17 @@ const colorOptions = {
   7: "orange",
 };
 
+const colorOptions2 = [
+  "black",
+  "coral",
+  "gold",
+  "lightskyblue",
+  "lightpink",
+  "mediumseagreen",
+  "darkgrey",
+  "lightgrey",
+]; // whole ann concatenated with parts
+
 export function makeColor(ann) {
   var annToColor = {};
   var pieceToColor = [];
@@ -31,6 +42,23 @@ export function makeAnnotation(annToColor) {
     <>
       {Object.entries(annToColor).map(([ann, color]) => {
         return <span style={{ color: color, marginRight: "18px" }}>{ann}</span>;
+      })}
+    </>
+  );
+}
+
+export function makeAnnotation2(ann) {
+  const arr = ann.split("#");
+  const arrlast = arr.length - 1;
+  return (
+    <>
+      {arr.flatMap((a, idx) => {
+        return idx === arrlast
+          ? [<span style={{ color: colorOptions2[idx] }}>{a}</span>]
+          : [
+              <span style={{ color: colorOptions2[idx] }}>{a}</span>,
+              <span style={{ color: "black" }}>{"#"}</span>,
+            ];
       })}
     </>
   );
