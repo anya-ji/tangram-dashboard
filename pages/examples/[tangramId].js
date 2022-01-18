@@ -158,7 +158,7 @@ export default function Annotations(props) {
 
                   var rows = [];
 
-                  for (var i = 0; i < 8; i++) {
+                  for (var i = 0; i <= 8; i++) {
                     idx++;
                     if (i == 0) {
                       //target + distractor0 row
