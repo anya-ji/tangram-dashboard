@@ -1,3 +1,5 @@
+/** View annotations in random order. */
+
 import Tangram from "../components/tangram";
 import tangrams from "../assets/tangrams.json";
 import { makeStyles } from "@material-ui/core/styles";

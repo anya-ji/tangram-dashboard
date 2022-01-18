@@ -91,7 +91,7 @@ export default function Home() {
             >
               {showDense ? "All" : "Dense"}
             </Button>
-            <Button
+            {/* <Button
               color="inherit"
               style={{ right: "12px" }}
               onClick={() => {
@@ -99,6 +99,15 @@ export default function Home() {
               }}
             >
               Statistics
+            </Button> */}
+             <Button
+              color="inherit"
+              style={{ right: "12px" }}
+              onClick={() => {
+                router.push(`/examples`);
+              }}
+            >
+              Examples
             </Button>
             {/* <Button
               color="inherit"
