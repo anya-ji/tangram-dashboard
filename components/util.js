@@ -1,3 +1,5 @@
+import trainFreq from "../assets/frequency/train_freq.json";
+
 const colorOptions = {
   1: "red",
   2: "green",
@@ -37,6 +39,7 @@ export function makeColor(ann) {
   return { colors: pieceToColor, annToColor: annToColor };
 }
 
+/** Make colored part annotations. */
 export function makeAnnotation(annToColor) {
   return (
     <>
@@ -47,6 +50,7 @@ export function makeAnnotation(annToColor) {
   );
 }
 
+/** Make colored concatenated annotations (xx#yy#zz). */
 export function makeAnnotation2(ann) {
   const arr = ann.split("#");
   const arrlast = arr.length - 1;
@@ -57,6 +61,46 @@ export function makeAnnotation2(ann) {
           ? [<span style={{ color: colorOptions2[idx] }}>{a}</span>]
           : [
               <span style={{ color: colorOptions2[idx] }}>{a}</span>,
+              <span style={{ color: "black" }}>{"#"}</span>,
+            ];
+      })}
+    </>
+  );
+}
+
+/** Add frequency to colored concatenated annotations. */
+function numFormat(num) {
+  // return num;
+  return (Math.round(num * 1000) / 1000).toFixed(3);
+}
+
+function addFreq(phrase, freqDict) {
+  var words = phrase.split(" ");
+  var rs = [];
+  for (var i = 0; i < words.length; i++) {
+    rs.push(words[i] + "(" + numFormat(freqDict[words[i]]) + ")");
+  }
+
+  var frq = rs.join(" ");
+  return frq;
+}
+export function makeFrequency(ann) {
+  const arr = ann.split("#");
+  const arrlast = arr.length - 1;
+
+  return (
+    <>
+      {arr.flatMap((a, idx) => {
+        return idx === arrlast
+          ? [
+              <span style={{ color: colorOptions2[idx] }}>
+                {addFreq(a, trainFreq)}
+              </span>,
+            ]
+          : [
+              <span style={{ color: colorOptions2[idx] }}>
+                {addFreq(a, trainFreq)}
+              </span>,
               <span style={{ color: "black" }}>{"#"}</span>,
             ];
       })}

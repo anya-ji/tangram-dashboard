@@ -91,15 +91,15 @@ export default function Home() {
             >
               {showDense ? "All" : "Dense"}
             </Button>
-            {/* <Button
+            <Button
               color="inherit"
               style={{ right: "12px" }}
               onClick={() => {
-                router.push(`/statistics/agreement`);
+                router.push(`/statistics/frequency`);
               }}
             >
               Statistics
-            </Button> */}
+            </Button>
              <Button
               color="inherit"
               style={{ right: "12px" }}
