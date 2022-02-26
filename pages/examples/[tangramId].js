@@ -1,13 +1,9 @@
-import Tangram from "../../components/tangram";
-import tangrams from "../../assets/tangrams.json";
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
-import ButtonGroup from "@material-ui/core/ButtonGroup";
 import { useRouter } from "next/router";
-import * as FB from "../api/firebase";
 import { useState, useEffect } from "react";
 import { makeAnnotation2 } from "../../components/util";
 import Table from "@material-ui/core/Table";
@@ -17,12 +13,12 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
-import agreement from "../../assets/file_agreement.json";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import InputLabel from "@material-ui/core/InputLabel";
 import FormControl from "@material-ui/core/FormControl";
-import interpinfo from "../../assets/page4-51_interp_info.json";
+import interpData from "../../assets/interpretation/combined_interp_info.json";
+import diffAnns from "../../assets/interpretation/diff_anns.json";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -68,11 +64,22 @@ export default function Annotations(props) {
 
   const [prediction, setPrediction] = useState("text");
   const [model, setModel] = useState("mult");
+  const [pickedAnn, setAnn] = useState("ALL");
   var idx = 0;
 
   if (!tangramId) {
     return <></>;
   } else {
+    const tangramName = tangramId.replace(".svg", "");
+
+    // useEffect(()=>{
+
+    // }, [diffAnns])
+
+    const handleChangeAnnotation = (event) => {
+      setAnn(event.target.value);
+    };
+
     const handleChangePrediction = (event) => {
       setPrediction(event.target.value);
     };
@@ -101,7 +108,7 @@ export default function Annotations(props) {
               Home
             </Button>
             <Typography variant="h6" align="center" className={classes.title}>
-              {"Example: " + tangramId.replace(".svg", "")}
+              {"Example: " + tangramName}
             </Typography>
           </Toolbar>
         </AppBar>
@@ -114,8 +121,12 @@ export default function Annotations(props) {
             value={prediction}
             onChange={handleChangePrediction}
           >
-            <MenuItem value={"text"}>text</MenuItem>
-            <MenuItem value={"image"}>image</MenuItem>
+            <MenuItem key={"text"} value={"text"}>
+              text
+            </MenuItem>
+            <MenuItem key={"image"} value={"image"}>
+              image
+            </MenuItem>
           </Select>
         </FormControl>
         <FormControl className={classes.selects}>
@@ -126,11 +137,45 @@ export default function Annotations(props) {
             value={model}
             onChange={handleChangeModel}
           >
-            <MenuItem value={"mult"}>mult</MenuItem>
-            <MenuItem value={"sum"}>sum</MenuItem>
-            <MenuItem value={"model8"}>model8</MenuItem>
-            <MenuItem value={"model9"}>model9</MenuItem>
-            <MenuItem value={"model10"}>model10</MenuItem>
+            <MenuItem key={"m1"} value={"mult"}>
+              mult
+            </MenuItem>
+            <MenuItem key={"m2"} value={"sum"}>
+              sum
+            </MenuItem>
+            <MenuItem key={"m3"} value={"model8"}>
+              model8
+            </MenuItem>
+            <MenuItem key={"m4"} value={"model9"}>
+              model9
+            </MenuItem>
+            <MenuItem key={"m5"} value={"model10"}>
+              model10
+            </MenuItem>
+          </Select>
+        </FormControl>
+        <FormControl className={classes.selects}>
+          <InputLabel id="demo-simple-select-label">Annotation</InputLabel>
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            value={pickedAnn}
+            onChange={handleChangeAnnotation}
+          >
+            <MenuItem key={"all-anns"} value={"ALL"}>
+              ALL ANNOTATIONS
+            </MenuItem>
+            {diffAnns ? (
+              diffAnns[tangramName].map((el, idx) => {
+                return (
+                  <MenuItem key={idx} value={el}>
+                    {el}
+                  </MenuItem>
+                );
+              })
+            ) : (
+              <></>
+            )}
           </Select>
         </FormControl>
 
@@ -148,13 +193,21 @@ export default function Annotations(props) {
               </TableRow>
             </TableHead>
             <TableBody>
-              {interpinfo ? (
-                interpinfo.flatMap((element) => {
+              {interpData ? (
+                interpData[tangramName].map((element) => {
                   if (
                     element["model"] !== model ||
                     element["pred_type"] !== prediction
                   )
                     return;
+                  if (
+                    pickedAnn !== "ALL" &&
+                    element["target_text"].split("#")[0] !== pickedAnn
+                  ) {
+                    // if the whole annotation is not picked and we're not looking at all annotations
+                    console.log(pickedAnn);
+                    return;
+                  }
 
                   var rows = [];
 
@@ -176,19 +229,31 @@ export default function Annotations(props) {
                             }}
                           >
                             {prediction === "text" ? (
-                              element[element["pred"] + "_text"]
+                              makeAnnotation2(
+                                element[element["pred"] + "_text"]
+                              )
                             ) : (
                               <img
-                                src={`../eval_images/${
-                                  element[element["pred"]]
-                                }.png`}
+                                // src={`../dev_images/${
+                                //   element[element["pred"]]
+                                // }.png`}
+                                src={
+                                  "https://storage.googleapis.com/tangram-online.appspot.com/dev_images/" +
+                                  element[element["pred"]] +
+                                  ".png"
+                                }
                                 style={{ height: "50px" }}
                               />
                             )}
                           </TableCell>
                           <TableCell align="center" height="50px" width="12.5%">
                             <img
-                              src={`../eval_images/${element["target"]}.png`}
+                              // src={`../dev_images/${element["target"]}.png`}
+                              src={
+                                "https://storage.googleapis.com/tangram-online.appspot.com/dev_images/" +
+                                element["target"] +
+                                ".png"
+                              }
                               style={{ height: "50px" }}
                             />
                           </TableCell>
@@ -200,7 +265,7 @@ export default function Annotations(props) {
                           </TableCell>
                           <TableCell align="center" height="50px" width="12.5%">
                             <img
-                              src={`../eval_images/${element["distractor0"]}.png`}
+                              src={`../dev_images/${element["distractor0"]}.png`}
                               style={{ height: "50px" }}
                             />
                           </TableCell>
@@ -229,14 +294,21 @@ export default function Annotations(props) {
                           </TableCell>
                           <TableCell align="center" height="50px" width="12.5%">
                             <img
-                              src={`../eval_images/${
-                                element["distractor" + i]
-                              }.png`}
+                              // src={`../dev_images/${
+                              //   element["distractor" + i]
+                              // }.png`}
+                              src={
+                                "https://storage.googleapis.com/tangram-online.appspot.com/dev_images/" +
+                                element["distractor" + i] +
+                                ".png"
+                              }
                               style={{ height: "50px" }}
                             />
                           </TableCell>
                           <TableCell align="center" height="50px" width="12.5%">
-                            {makeAnnotation2(element["distractor" + i + "_text"])}
+                            {makeAnnotation2(
+                              element["distractor" + i + "_text"]
+                            )}
                           </TableCell>
                           <TableCell align="center" height="50px" width="12.5%">
                             {element["distractor" + i + "_prob"]}

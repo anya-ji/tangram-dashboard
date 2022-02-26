@@ -9,11 +9,6 @@ import GridList from "@material-ui/core/GridList";
 import GridListTile from "@material-ui/core/GridListTile";
 import GridListTileBar from "@material-ui/core/GridListTileBar";
 import { useRouter } from "next/router";
-// import * as FB from "./api/firebase";
-// import { useState, useEffect } from "react";
-// import Menu from "@material-ui/core/Menu";
-// import MenuItem from "@material-ui/core/MenuItem";
-// import { sampled } from "../components/util";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -40,7 +35,7 @@ export default function Examples() {
   const classes = useStyles();
   const router = useRouter();
 
-  const examples = ["page4-51"];
+  const examples = ["page4-51", "page6-243"];
 
   return (
     <div className={classes.root}>
