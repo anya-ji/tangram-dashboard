@@ -35,7 +35,7 @@ export default function Examples() {
   const classes = useStyles();
   const router = useRouter();
 
-  const examples = ["page4-51", "page6-243"];
+  const examples = ["page4-51", "page6-243", "page8-54"];
 
   return (
     <div className={classes.root}>

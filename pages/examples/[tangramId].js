@@ -5,7 +5,7 @@ import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
-import { makeAnnotation2 } from "../../components/util";
+// import { makeAnnotation2 } from "../../components/util";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -19,6 +19,9 @@ import InputLabel from "@material-ui/core/InputLabel";
 import FormControl from "@material-ui/core/FormControl";
 import interpData from "../../assets/interpretation/combined_interp_info.json";
 import diffAnns from "../../assets/interpretation/diff_anns.json";
+
+import { makeFrequency } from "../../components/util";
+import devFreq from "../../assets/frequency/dev_freq.json";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -229,14 +232,12 @@ export default function Annotations(props) {
                             }}
                           >
                             {prediction === "text" ? (
-                              makeAnnotation2(
-                                element[element["pred"] + "_text"]
+                              makeFrequency(
+                                element[element["pred"] + "_text"],
+                                devFreq
                               )
                             ) : (
                               <img
-                                // src={`../dev_images/${
-                                //   element[element["pred"]]
-                                // }.png`}
                                 src={
                                   "https://storage.googleapis.com/tangram-online.appspot.com/dev_images/" +
                                   element[element["pred"]] +
@@ -248,7 +249,6 @@ export default function Annotations(props) {
                           </TableCell>
                           <TableCell align="center" height="50px" width="12.5%">
                             <img
-                              // src={`../dev_images/${element["target"]}.png`}
                               src={
                                 "https://storage.googleapis.com/tangram-online.appspot.com/dev_images/" +
                                 element["target"] +
@@ -258,7 +258,7 @@ export default function Annotations(props) {
                             />
                           </TableCell>
                           <TableCell align="center" height="50px" width="12.5%">
-                            {makeAnnotation2(element["target_text"])}
+                            {makeFrequency(element["target_text"], devFreq)}
                           </TableCell>
                           <TableCell align="center" height="50px" width="12.5%">
                             {element["target_prob"]}
@@ -270,7 +270,10 @@ export default function Annotations(props) {
                             />
                           </TableCell>
                           <TableCell align="center" height="50px" width="12.5%">
-                            {makeAnnotation2(element["distractor0_text"])}
+                            {makeFrequency(
+                              element["distractor0_text"],
+                              devFreq
+                            )}
                           </TableCell>
                           <TableCell align="center" height="50px" width="12.5%">
                             {element["distractor0_prob"]}
@@ -306,8 +309,9 @@ export default function Annotations(props) {
                             />
                           </TableCell>
                           <TableCell align="center" height="50px" width="12.5%">
-                            {makeAnnotation2(
-                              element["distractor" + i + "_text"]
+                            {makeFrequency(
+                              element["distractor" + i + "_text"],
+                              devFreq
                             )}
                           </TableCell>
                           <TableCell align="center" height="50px" width="12.5%">

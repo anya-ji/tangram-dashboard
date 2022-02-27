@@ -4,7 +4,7 @@ Extract different whole annotations.
 '''
 # Combine
 import json
-examples = ['page4-51', 'page6-243']
+examples = ['page4-51', 'page6-243', 'page8-54'] ### ADD NEW FILE HERE; ADD to the page js file too!!
 
 rs={}
 

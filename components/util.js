@@ -1,5 +1,3 @@
-import trainFreq from "../assets/frequency/train_freq.json";
-
 const colorOptions = {
   1: "red",
   2: "green",
@@ -84,7 +82,8 @@ function addFreq(phrase, freqDict) {
   var frq = rs.join(" ");
   return frq;
 }
-export function makeFrequency(ann) {
+
+export function makeFrequency(ann, freqDict) {
   const arr = ann.split("#");
   const arrlast = arr.length - 1;
 
@@ -94,12 +93,12 @@ export function makeFrequency(ann) {
         return idx === arrlast
           ? [
               <span style={{ color: colorOptions2[idx] }}>
-                {addFreq(a, trainFreq)}
+                {addFreq(a, freqDict)}
               </span>,
             ]
           : [
               <span style={{ color: colorOptions2[idx] }}>
-                {addFreq(a, trainFreq)}
+                {addFreq(a, freqDict)}
               </span>,
               <span style={{ color: "black" }}>{"#"}</span>,
             ];

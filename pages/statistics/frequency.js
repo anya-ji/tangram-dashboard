@@ -20,8 +20,12 @@ import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import InputLabel from "@material-ui/core/InputLabel";
 import FormControl from "@material-ui/core/FormControl";
-import pcData from "../../assets/frequency/pc_to_dicts_train.json";
 import { makeFrequency } from "../../components/util";
+
+import pcDataTrain from "../../assets/frequency/pc_to_dicts_train.json";
+import pcDataDev from "../../assets/frequency/pc_to_dicts_dev.json";
+import trainFreq from "../../assets/frequency/train_freq.json";
+import devFreq from "../../assets/frequency/dev_freq.json";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -57,6 +61,7 @@ const useStyles = makeStyles((theme) => ({
     marginTop: "3vh",
     marginBottom: "1vh",
     width: "20%",
+    flexGrow: 1,
   },
 }));
 
@@ -65,10 +70,15 @@ export default function Frequency(props) {
   const router = useRouter();
 
   const [pc, setPc] = useState(1);
+  const [ds, setDataset] = useState("train");
   var idx = 0;
 
   const handleChangePc = (event) => {
     setPc(event.target.value);
+  };
+
+  const handleChangeDs = (event) => {
+    setDataset(event.target.value);
   };
 
   /** Offset idx_to_color. json has keys from 1-7, but tangram component requires 0-6. */
@@ -105,10 +115,23 @@ export default function Frequency(props) {
             Home
           </Button>
           <Typography variant="h6" align="center" className={classes.title}>
-            Word Frequency (Training Set)
+            Word Frequency
           </Typography>
         </Toolbar>
       </AppBar>
+
+      <FormControl className={classes.selects}>
+        <InputLabel id="demo-simple-select-label">dataset</InputLabel>
+        <Select
+          labelId="demo-simple-select-label"
+          id="demo-simple-select"
+          value={ds}
+          onChange={handleChangeDs}
+        >
+          <MenuItem value={"train"}>training</MenuItem>
+          <MenuItem value={"dev"}>development</MenuItem>
+        </Select>
+      </FormControl>
 
       <FormControl className={classes.selects}>
         <InputLabel id="demo-simple-select-label"># of parts</InputLabel>
@@ -127,6 +150,7 @@ export default function Frequency(props) {
           <MenuItem value={7}>7</MenuItem>
         </Select>
       </FormControl>
+
       <TableContainer component={Paper}>
         <Table className={classes.table} aria-label="simple table">
           <TableHead>
@@ -137,8 +161,8 @@ export default function Frequency(props) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {pcData ? (
-              pcData[pc].map((element) => {
+            {pcDataTrain && pcDataDev ? (
+              (ds === "train" ? pcDataTrain : pcDataDev)[pc].map((element) => {
                 var text = element["text"];
                 var colors = offsetColors(element["idx_to_color"]);
                 var file = element["file"] + ".svg";
@@ -163,7 +187,10 @@ export default function Frequency(props) {
                       }
                     </TableCell>
                     <TableCell align="center" height="150px" width="20%">
-                      {makeFrequency(text)}
+                      {makeFrequency(
+                        text,
+                        ds === "train" ? trainFreq : devFreq
+                      )}
                     </TableCell>
                   </TableRow>
                 );
