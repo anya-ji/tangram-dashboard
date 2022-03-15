@@ -52,15 +52,6 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: "1vh",
     width: "95%",
   },
-  selects: {
-    // minWidth: 650,
-    marginLeft: "20%",
-    marginRight: "20%",
-    marginTop: "3vh",
-    marginBottom: "1vh",
-    width: "20%",
-    flexGrow: 1,
-  },
 }));
 
 export default function Frequency(props) {
@@ -118,7 +109,16 @@ export default function Frequency(props) {
         </Toolbar>
       </AppBar>
 
-      <FormControl className={classes.selects}>
+      <FormControl
+        style={{
+          marginLeft: "20%",
+          marginRight: "20%",
+          marginTop: "3vh",
+          marginBottom: "1vh",
+          width: "60%",
+          flexGrow: 1,
+        }}
+      >
         <InputLabel id="demo-simple-select-label">dataset</InputLabel>
         <Select
           labelId="demo-simple-select-label"
@@ -130,8 +130,17 @@ export default function Frequency(props) {
           <MenuItem value={"dev"}>development (augmented)</MenuItem>
         </Select>
       </FormControl>
-
-      <FormControl className={classes.selects}>
+      <br />
+      <FormControl
+        style={{
+          marginLeft: "20%",
+          marginRight: "20%",
+          marginTop: "3vh",
+          marginBottom: "1vh",
+          width: "60%",
+          flexGrow: 1,
+        }}
+      >
         <InputLabel id="demo-simple-select-label"># of parts</InputLabel>
         <Select
           labelId="demo-simple-select-label"
@@ -155,7 +164,9 @@ export default function Frequency(props) {
             <TableRow>
               <TableCell align="center">Index</TableCell>
               <TableCell align="center">Tangram</TableCell>
-              <TableCell align="center">Annotation (Word Frequency, Log Frequency, Rank)</TableCell>
+              <TableCell align="center">
+                Annotation (Word Frequency, Log Frequency, Rank)
+              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
