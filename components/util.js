@@ -94,6 +94,9 @@ function addFreq(phrase, freqDict) {
           rank +
           ")"
       );
+    } else {
+      // clean version doesn't exist
+      rs.push(word + "(*)");
     }
   }
 
