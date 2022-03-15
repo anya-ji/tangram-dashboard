@@ -1,4 +1,0 @@
-#NEEDS both color_texts and part_sw
-frq.py
-parts_count.py
-add imports to frequency.js

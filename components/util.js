@@ -69,7 +69,7 @@ export function makeAnnotation2(ann) {
 /** Add frequency to colored concatenated annotations. */
 function numFormat(num) {
   // return num;
-  return (Math.round(num * 1000) / 1000).toFixed(3);
+  return (Math.round(num * 100000) / 100000).toFixed(5);
 }
 
 function addFreq(phrase, freqDict) {

@@ -265,7 +265,11 @@ export default function Annotations(props) {
                           </TableCell>
                           <TableCell align="center" height="50px" width="12.5%">
                             <img
-                              src={`../dev_images/${element["distractor0"]}.png`}
+                              src={
+                                "https://storage.googleapis.com/tangram-online.appspot.com/dev_images/" +
+                                element["distractor0"] +
+                                ".png"
+                              }
                               style={{ height: "50px" }}
                             />
                           </TableCell>
@@ -297,9 +301,6 @@ export default function Annotations(props) {
                           </TableCell>
                           <TableCell align="center" height="50px" width="12.5%">
                             <img
-                              // src={`../dev_images/${
-                              //   element["distractor" + i]
-                              // }.png`}
                               src={
                                 "https://storage.googleapis.com/tangram-online.appspot.com/dev_images/" +
                                 element["distractor" + i] +
