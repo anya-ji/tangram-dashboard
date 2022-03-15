@@ -21,7 +21,7 @@ import interpData from "../../assets/interpretation/combined_interp_info.json";
 import diffAnns from "../../assets/interpretation/diff_anns.json";
 
 import { makeFrequency } from "../../components/util";
-import devFreq from "../../assets/frequency/dev_freq.json";
+import devFreq from "../../assets/frequency/dev_freq_info.json";
 
 const useStyles = makeStyles((theme) => ({
   root: {

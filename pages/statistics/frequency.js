@@ -25,7 +25,7 @@ import { makeFrequency } from "../../components/util";
 import pcDataTrain from "../../assets/frequency/pc_to_dicts_train.json";
 import pcDataDev from "../../assets/frequency/pc_to_dicts_dev.json";
 import trainFreq from "../../assets/frequency/train_freq.json";
-import devFreq from "../../assets/frequency/dev_freq.json";
+import devFreq from "../../assets/frequency/dev_freq_info.json";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -70,7 +70,7 @@ export default function Frequency(props) {
   const router = useRouter();
 
   const [pc, setPc] = useState(1);
-  const [ds, setDataset] = useState("train");
+  const [ds, setDataset] = useState("dev");
   var idx = 0;
 
   const handleChangePc = (event) => {
@@ -128,7 +128,7 @@ export default function Frequency(props) {
           value={ds}
           onChange={handleChangeDs}
         >
-          <MenuItem value={"train"}>training</MenuItem>
+          {/* <MenuItem value={"train"}>training</MenuItem> */}
           <MenuItem value={"dev"}>development</MenuItem>
         </Select>
       </FormControl>
@@ -157,7 +157,7 @@ export default function Frequency(props) {
             <TableRow>
               <TableCell align="center">Index</TableCell>
               <TableCell align="center">Tangram</TableCell>
-              <TableCell align="center">Annotation (Word Frequency)</TableCell>
+              <TableCell align="center">Annotation (Word Frequency, Log Frequency, Rank)</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>

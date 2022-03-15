@@ -1,3 +1,5 @@
+import devWordToCleaned from "../assets/frequency/dev_word_to_cleaned.json";
+
 const colorOptions = {
   1: "red",
   2: "green",
@@ -73,10 +75,26 @@ function numFormat(num) {
 }
 
 function addFreq(phrase, freqDict) {
+  //[freqDict]: {"word": [freq, log, rank]}
   var words = phrase.split(" ");
   var rs = [];
   for (var i = 0; i < words.length; i++) {
-    rs.push(words[i] + "(" + numFormat(freqDict[words[i]]) + ")");
+    var word = words[i];
+    var cleanedWord = devWordToCleaned[word]; //cleaned version of the word
+    if (cleanedWord) {
+      // if cleaned version exists
+      var [freq, logFreq, rank] = freqDict[cleanedWord];
+      rs.push(
+        word +
+          "(" +
+          numFormat(freq) +
+          "," +
+          numFormat(logFreq) +
+          "," +
+          rank +
+          ")"
+      );
+    }
   }
 
   var frq = rs.join(" ");
@@ -84,6 +102,7 @@ function addFreq(phrase, freqDict) {
 }
 
 export function makeFrequency(ann, freqDict) {
+  //[freqDict]: {"word": [freq, log, rank]}
   const arr = ann.split("#");
   const arrlast = arr.length - 1;
 
