@@ -5,9 +5,7 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
-import ButtonGroup from "@material-ui/core/ButtonGroup";
 import { useRouter } from "next/router";
-import * as FB from "../api/firebase";
 import { useState, useEffect } from "react";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -55,7 +53,7 @@ const useStyles = makeStyles((theme) => ({
     width: "95%",
   },
   selects: {
-    minWidth: 650,
+    // minWidth: 650,
     marginLeft: "20%",
     marginRight: "20%",
     marginTop: "3vh",
@@ -129,7 +127,7 @@ export default function Frequency(props) {
           onChange={handleChangeDs}
         >
           {/* <MenuItem value={"train"}>training</MenuItem> */}
-          <MenuItem value={"dev"}>development</MenuItem>
+          <MenuItem value={"dev"}>development (augmented)</MenuItem>
         </Select>
       </FormControl>
 
