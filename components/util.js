@@ -1,13 +1,13 @@
 import devWordToCleaned from "../assets/frequency/dev_word_to_cleaned.json";
 
 const colorOptions = {
-  1: "red",
-  2: "green",
-  3: "blue",
-  4: "gold",
-  5: "purple",
-  6: "deeppink",
-  7: "orange",
+  1: "coral",
+  2: "gold",
+  3: "lightskyblue",
+  4: "lightpink",
+  5: "mediumseagreen",
+  6: "darkgrey",
+  7: "lightgrey",
 };
 
 const colorOptions2 = [
