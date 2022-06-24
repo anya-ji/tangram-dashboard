@@ -131,7 +131,7 @@ export default function Annotations(props) {
           ></Tangram>
         </div>
 
-        <TableContainer component={Paper}>
+        {/* <TableContainer component={Paper}>
           <Table className={classes.uptable} aria-label="simple table">
             <TableBody>
               <TableRow key="languages">
@@ -166,7 +166,7 @@ export default function Annotations(props) {
               </TableRow>
             </TableBody>
           </Table>
-        </TableContainer>
+        </TableContainer> */}
 
         <TableContainer component={Paper}>
           <Table className={classes.table} aria-label="simple table">

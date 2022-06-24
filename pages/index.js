@@ -91,7 +91,7 @@ export default function Home() {
             >
               {showDense ? "All" : "Dense"}
             </Button>
-            <Button
+            {/* <Button
               color="inherit"
               style={{ right: "12px" }}
               onClick={() => {
@@ -108,7 +108,7 @@ export default function Home() {
               }}
             >
               Examples
-            </Button>
+            </Button> */}
             {/* <Button
               color="inherit"
               style={{ right: "12px" }}
